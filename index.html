@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <button id="menuBtn" class="btn-icon" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1><i class="fas fa-utensils"></i> Meal Planner</h1>
+            <div class="header-actions">
+                <!-- Placeholder per bilanciare il layout -->
+                <div style="width: 36px;"></div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <button class="nav-tab active" data-tab="menu">Menu Settimanale</button>
+            <button class="nav-tab" data-tab="shopping">Lista della Spesa</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Menu Settimanale -->
+        <section id="menu-section" class="tab-content active">
+            <div class="week-navigation">
+                <button id="prevWeekBtn" class="btn-icon"><i class="fas fa-chevron-left"></i></button>
+                <div id="currentWeek">Settimana: <span id="weekNumber"></span></div>
+                <button id="nextWeekBtn" class="btn-icon"><i class="fas fa-chevron-right"></i></button>
+                <button id="cloneWeekBtn" class="btn" title="Clona settimana">
+                    <i class="fas fa-clone"></i> Clona
+                </button>
+            </div>
+
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="week">Vista Settimana</button>
+                <button class="view-btn" data-view="day">Vista Giorno</button>
+            </div>
+
+            <!-- Vista Settimana -->
+            <div id="week-view" class="meal-view active">
+                <div class="weekly-grid">
+                    <!-- Prima riga: intestazioni dei giorni -->
+                    <div class="day-header"></div> <!-- Cella vuota per allineamento -->
+                    <div class="day-header">🟩 Lunedì</div>
+                    <div class="day-header">🟦 Martedì</div>
+                    <div class="day-header">🟥 Mercoledì</div>
+                    <div class="day-header">🟨 Giovedì</div>
+                    <div class="day-header">🟪 Venerdì</div>
+                    <div class="day-header">🟧 Sabato</div>
+                    <div class="day-header">⬛ Domenica</div>
+
+                    <!-- Righe per i pasti -->
+                    <div class="meal-type">Colazione</div>
+                    <div class="meal-cell" data-day="0" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="1" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="2" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="3" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="4" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="5" data-meal="colazione"></div>
+                    <div class="meal-cell" data-day="6" data-meal="colazione"></div>
+
+                    <div class="meal-type">Pranzo</div>
+                    <div class="meal-cell" data-day="0" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="1" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="2" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="3" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="4" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="5" data-meal="pranzo"></div>
+                    <div class="meal-cell" data-day="6" data-meal="pranzo"></div>
+
+                    <div class="meal-type">Spuntino</div>
+                    <div class="meal-cell" data-day="0" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="1" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="2" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="3" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="4" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="5" data-meal="spuntino"></div>
+                    <div class="meal-cell" data-day="6" data-meal="spuntino"></div>
+
+                    <div class="meal-type">Cena</div>
+                    <div class="meal-cell" data-day="0" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="1" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="2" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="3" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="4" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="5" data-meal="cena"></div>
+                    <div class="meal-cell" data-day="6" data-meal="cena"></div>
+                </div>
+            </div>
+
+            <!-- Vista Giorno -->
+            <div id="day-view" class="meal-view">
+                <div class="day-tabs">
+                    <button class="day-tab" data-day="0">🟩 Lun</button>
+                    <button class="day-tab" data-day="1">🟦 Mar</button>
+                    <button class="day-tab" data-day="2">🟥 Mer</button>
+                    <button class="day-tab" data-day="3">🟨 Gio</button>
+                    <button class="day-tab" data-day="4">🟪 Ven</button>
+                    <button class="day-tab" data-day="5">🟧 Sab</button>
+                    <button class="day-tab" data-day="6">⬛ Dom</button>
+                </div>
+                <div class="day-meals">
+                    <div class="day-meal-card">
+                        <h3>Colazione</h3>
+                        <div class="meal-foods" id="day-colazione"></div>
+                        <button class="add-food-btn" data-meal="colazione">
+                            <i class="fas fa-plus"></i> Aggiungi alimento
+                        </button>
+                    </div>
+                    <div class="day-meal-card">
+                        <h3>Pranzo</h3>
+                        <div class="meal-foods" id="day-pranzo"></div>
+                        <button class="add-food-btn" data-meal="pranzo">
+                            <i class="fas fa-plus"></i> Aggiungi alimento
+                        </button>
+                    </div>
+                    <div class="day-meal-card">
+                        <h3>Spuntino</h3>
+                        <div class="meal-foods" id="day-spuntino"></div>
+                        <button class="add-food-btn" data-meal="spuntino">
+                            <i class="fas fa-plus"></i> Aggiungi alimento
+                        </button>
+                    </div>
+                    <div class="day-meal-card">
+                        <h3>Cena</h3>
+                        <div class="meal-foods" id="day-cena"></div>
+                        <button class="add-food-btn" data-meal="cena">
+                            <i class="fas fa-plus"></i> Aggiungi alimento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lista della Spesa -->
+        <section id="shopping-section" class="tab-content">
+            <div class="shopping-actions">
+                <button id="generateListBtn" class="btn">
+                    <i class="fas fa-sync-alt"></i> Genera Lista
+                </button>
+                <button id="addCustomItemBtn" class="btn">
+                    <i class="fas fa-plus"></i> Aggiungi Prodotto
+                </button>
+            </div>
+            <div id="shopping-list" class="shopping-categories">
+                <!-- Le categorie verranno generate dinamicamente -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="food-selector-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Seleziona Alimenti</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="proteins">🥩 Proteine</button>
+                    <button class="category-tab" data-category="dairy">🥛 Latticini</button>
+                    <button class="category-tab" data-category="supplements">🧪 Integratori</button>
+                    <button class="category-tab" data-category="nuts">🥜 Frutta secca</button>
+                    <button class="category-tab" data-category="fruits">🍌 Frutta fresca</button>
+                    <button class="category-tab" data-category="vegetables">🥗 Verdure</button>
+                    <button class="category-tab" data-category="cereals">🍞 Cereali e pane</button>
+                    <button class="category-tab" data-category="other">🛒 Altro</button>
+                </div>
+                <div id="food-items" class="food-items-grid">
+                    <!-- Gli alimenti verranno generati dinamicamente -->
+                </div>
+                <div class="add-custom-food">
+                    <input type="text" id="customFoodInput" placeholder="Nuovo alimento...">
+                    <button id="addCustomFoodBtn" class="btn">Aggiungi</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmFoodSelection" class="btn">Conferma</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="import-export-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Import/Export Dati</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-export-tabs">
+                    <button class="import-export-tab active" data-tab="export">Export</button>
+                    <button class="import-export-tab" data-tab="import">Import</button>
+                </div>
+                <div class="import-export-content">
+                    <div id="export-content" class="tab-panel active">
+                        <p>Esporta i tuoi dati in formato JSON per il backup:</p>
+                        <textarea id="exportData" readonly></textarea>
+                        <button id="copyExportBtn" class="btn">Copia negli appunti</button>
+                        <button id="downloadExportBtn" class="btn">Scarica file</button>
+                    </div>
+                    <div id="import-content" class="tab-panel">
+                        <p>Incolla i dati JSON per ripristinarli:</p>
+                        <textarea id="importData" placeholder="Incolla qui i tuoi dati JSON..."></textarea>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                        <button id="selectFileBtn" class="btn">Seleziona file</button>
+                        <button id="importDataBtn" class="btn">Importa Dati</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="clone-week-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Clona Settimana</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Seleziona la settimana da cui copiare il menù:</p>
+                <select id="sourceWeekSelect"></select>
+                <p>Nella settimana corrente: <span id="targetWeek"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmCloneBtn" class="btn">Clona</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-item-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Aggiungi Prodotto</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="itemCategorySelect">Categoria:</label>
+                    <select id="itemCategorySelect">
+                        <option value="proteins">🥩 Proteine</option>
+                        <option value="dairy">🥛 Latticini</option>
+                        <option value="supplements">🧪 Integratori</option>
+                        <option value="nuts">🥜 Frutta secca</option>
+                        <option value="fruits">🍌 Frutta fresca</option>
+                        <option value="vegetables">🥗 Verdure</option>
+                        <option value="cereals">🍞 Cereali e pane</option>
+                        <option value="other">🛒 Altro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemNameInput">Nome:</label>
+                    <input type="text" id="itemNameInput" placeholder="Nome prodotto">
+                </div>
+                <div class="form-group">
+                    <label for="itemQuantityInput">Quantità:</label>
+                    <input type="number" id="itemQuantityInput" value="1" min="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmAddItemBtn" class="btn">Aggiungi</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="select-week-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Seleziona Settimana</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Per quale settimana vuoi generare la lista della spesa?</p>
+                <select id="shoppingWeekSelect" class="form-control"></select>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmWeekSelectionBtn" class="btn">Genera Lista</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Aiuto</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Come utilizzare Meal Planner</h3>
+                <div class="help-section">
+                    <h4>Menu Settimanale</h4>
+                    <ul>
+                        <li>Usa la <strong>Vista Settimana</strong> per visualizzare tutti i pasti della settimana</li>
+                        <li>Utilizza la <strong>Vista Giorno</strong> per concentrarti su un giorno specifico</li>
+                        <li>Clicca su un pasto per aggiungere o modificare gli alimenti</li>
+                        <li>Naviga tra le settimane usando le frecce laterali</li>
+                        <li>Puoi clonare il menu di una settimana in un'altra con il pulsante "Clona"</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Lista della Spesa</h4>
+                    <ul>
+                        <li>Genera la lista della spesa automaticamente dal menu settimanale</li>
+                        <li>Aggiungi manualmente altri prodotti quando necessario</li>
+                        <li>Segna i prodotti come completati quando li acquisti</li>
+                        <li>Modifica le quantità in base alle tue esigenze</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>Backup Dati</h4>
+                    <ul>
+                        <li>Usa la funzione Import/Export per salvare o ripristinare i tuoi dati</li>
+                        <li>I dati vengono salvati automaticamente sul tuo dispositivo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>About</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body about-content">
+                <div class="app-logo">
+                    <i class="fas fa-utensils fa-3x"></i>
+                </div>
+                <h3>Meal Planner v1.1.0</h3>
+                <p>Un'applicazione per la pianificazione settimanale dei pasti e la gestione della lista della spesa.</p>
+                <p>Sviluppata con HTML, CSS e JavaScript.</p>
+                <p>&copy; 2025 - Tutti i diritti riservati</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-utensils"></i> Meal Planner</h3>
+            <button id="closeSidebarBtn" class="close-sidebar">&times;</button>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-menu">
+                <li>
+                    <button id="sidebarImportExportBtn">
+                        <i class="fas fa-file-export"></i> Import/Export
+                    </button>
+                </li>
+                <li>
+                    <button id="sidebarHelpBtn">
+                        <i class="fas fa-question-circle"></i> Aiuto
+                    </button>
+                </li>
+                <li>
+                    <button id="sidebarAboutBtn">
+                        <i class="fas fa-info-circle"></i> About
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Overlay per sidebar -->
+    <div id="overlay" class="overlay"></div>
+
+    <div id="toast" class="toast"></div>
+
+    <div class="fab-container">
+        <button id="fab" class="fab">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
